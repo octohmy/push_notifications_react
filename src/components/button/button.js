@@ -17,8 +17,9 @@ function Button() {
 
   const handleClick = () => {
     if ("Notification" in window && Notification.permission === "granted") {
-      const notification = new Notification("You have a new message!", {
-        body: "Hello",
+      const notification = new Notification("Hello, Bernard! Hurry!", {
+        body: "Complete your daily quiz too!!",
+        // tag: "Nudge"
       });
 
       notification.addEventListener("click", function (event) {
@@ -27,7 +28,10 @@ function Button() {
     } else if ("Notification" in window && Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-          const notification = new Notification("You have a new message!");
+          const notification = new Notification("Hello, Bernard! Hurry!",
+          { 
+            body: "\nComplete your daily quiz too!",
+            });
 
           notification.addEventListener("click", function (event) {
             window.open("https://www.google.com", "_blank");
