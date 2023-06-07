@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import logoIcon from "./logo2.png";
 
 function Button() {
   const buttonRef = useRef(null);
@@ -15,12 +16,15 @@ function Button() {
     };
   }, []);
 
-  const handleClick = () => {
+  const createNotification = (title, body) => {
+    const options = {
+      body: body,
+      icon: logoIcon,
+      badge: logoIcon,
+    };
+
     if ("Notification" in window && Notification.permission === "granted") {
-      const notification = new Notification("Hello, Bernard! Hurry!", {
-        body: "Complete your daily quiz too!!",
-        // tag: "Nudge"
-      });
+      const notification = new Notification(title, options);
 
       notification.addEventListener("click", function (event) {
         window.open("https://www.google.com", "_blank");
@@ -28,10 +32,7 @@ function Button() {
     } else if ("Notification" in window && Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-          const notification = new Notification("Hello, Bernard! Hurry!",
-          { 
-            body: "\nComplete your daily quiz too!",
-            });
+          const notification = new Notification(title, options);
 
           notification.addEventListener("click", function (event) {
             window.open("https://www.google.com", "_blank");
@@ -39,6 +40,10 @@ function Button() {
         }
       });
     }
+  };
+
+  const handleClick = () => {
+    createNotification("Hello, Bernard! Hurry!", "👾⏰👾\nClick to complete your daily quiz too!!");
   };
 
   return (
